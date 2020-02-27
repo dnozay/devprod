@@ -1,0 +1,17 @@
+# Python bytecode
+*.pyc
+__pycache__
+
+# Build directory
+build/*
+dist/*
+
+# Eggs
+.eggs/
+*.egg-info
+
+# test tools
+.tox
+coverage/
+.mypy_cache/
+.pytest_cache/
