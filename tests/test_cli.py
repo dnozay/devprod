@@ -19,6 +19,7 @@ def test_cli_github():
     assert result.exit_code == 0
 
 
+@patch.dict('os.environ', {'GITHUB_TOKEN': 'fake-token'}, clear=True)
 @patch('devprod.github.search')
 def test_cli_github_search(search):
     result = CliRunner().invoke(cli.main, ['github', 'search'])
