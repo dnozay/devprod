@@ -46,3 +46,31 @@ def get_project_config(session: Session, token: str, organization: str, project:
     data = {'auth_token': token}  # does not support session auth
     response = requests.get(config_url, data)
     return response.json()
+
+
+def get_project_secrets(session: Session, token: str, organization: str, project: str):
+    project_url = f'https://api.semaphoreci.com/v2/orgs/{organization}/projects?name={project}'
+    response = session.get(project_url)
+    if response.status_code != 200:
+        return {}
+
+    project_info = response.json()[0]
+    project_id = project_info['id']
+
+    # secrets
+    secrets_url = project_info['secrets_url']
+    response = session.get(secrets_url)
+    if response.status_code != 200:
+        return {}
+
+    # env_vars
+    env_vars_url = f'https://api.semaphoreci.com/v2/projects/{project_id}/env_vars'
+    response = session.get(env_vars_url)
+    if response.status_code != 200:
+        return {}
+
+    env_vars = {}
+    for env_var in response.json():
+        pass
+
+    return {}

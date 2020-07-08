@@ -48,9 +48,10 @@ def sem1_projects(organization):
 @click.argument('organization')
 @click.argument('project')
 def sem1_project_config(organization, project):
-    from devprod.semaphore_classic import session, get_project_config
+    from devprod.semaphore_classic import session, get_project_config, get_project_secrets
     env.load_environment(['SEMAPHORE1_TOKEN'])
     s = session(env.SEMAPHORE1_TOKEN)
+    secrets = get_project_secrets(s, env.SEMAPHORE1_TOKEN, organization, project)
     config = get_project_config(s, env.SEMAPHORE1_TOKEN, organization, project)
     for block in config:
         print(f'{block["type"]} name={block["name"]}')
